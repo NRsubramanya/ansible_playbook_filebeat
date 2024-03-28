@@ -1,0 +1,21 @@
+filebeat.inputs:
+  - type: filestream
+    id: Sys-logs
+    paths:
+      - /var/log/syslog
+    fields:
+      type: system
+
+{% if kafka_service_status.rc == 0 %}
+  - type: filestream
+    id: kafka-server
+    paths:
+      - /var/log/kafka/server.log
+    fields:
+      type: kafka
+{% endif %}
+
+output.logstash:
+  hosts: ["localhost:5044"]
+
+
