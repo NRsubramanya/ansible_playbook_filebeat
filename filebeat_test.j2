@@ -1,0 +1,10 @@
+filebeat.inputs:
+  - type: filestream
+    id: Sys-logs
+    paths:
+      - /var/log/syslog
+    fields:
+      type: system
+
+output.logstash:
+  hosts: ["localhost:5044"]
