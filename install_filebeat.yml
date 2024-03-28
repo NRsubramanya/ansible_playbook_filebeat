@@ -1,0 +1,12 @@
+---
+- name: Install Filebeat
+  hosts: all
+  become: yes
+  any_errors_fatal: true
+
+  tasks:
+    - name: Install Filebeat RPM
+      shell: rpm -vi "{{ filebeat_rpm_path }}"
+
+    - name: Enable Kafka module for Filebeat
+      command: filebeat modules enable kafka
