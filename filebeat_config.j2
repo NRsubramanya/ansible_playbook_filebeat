@@ -6,7 +6,7 @@ filebeat.inputs:
     fields:
       type: system
 
-{% if kafka_service_status.rc == 0 %}
+{% if kafka_service_status.status.ActiveState == "active" %}
   - type: filestream
     id: kafka-server
     paths:

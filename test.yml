@@ -9,13 +9,15 @@
 
     - name: Check Kafka service status
       systemd:
-        name: kafka
-        state: running
+        name: confluent-server
+        state: started
       register: kafka_service_status
 
-    - name: Debug Kafka service status
+    - name: Print Kafka service status
       debug:
         var: kafka_service_status
+
+
 
     - name: Generate Filebeat configuration
       template:
