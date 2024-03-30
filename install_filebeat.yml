@@ -17,9 +17,15 @@
     - name: Enable Kafka module for Filebeat
       command: filebeat modules enable kafka
    
+    - name: Check Kafka service status
+      systemd:
+        name: confluent-server
+        state: started
+      register: kafka_service_status   
+
     - name: Generate Filebeat configuration
       template:
-        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_test.j2
+        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_config.j2
         dest: /etc/filebeat/filebeat.yml
         owner: root
 

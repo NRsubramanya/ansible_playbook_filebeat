@@ -7,23 +7,18 @@
 
   tasks:
 
-    - name: Check Kafka service status
-      systemd:
-        name: confluent-server
-        state: started
-      register: kafka_service_status
+  #  - name: Print Kafka service status
+   #   debug:
+    #    var: kafka_service_status
 
-    - name: Print Kafka service status
-      debug:
-        var: kafka_service_status
-
-
+    - name: Enable Kafka module for Filebeat
+      command: filebeat modules enable kafka
 
     - name: Generate Filebeat configuration
       template:
-        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_config.j2
+        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_test.j2
         dest: /etc/filebeat/filebeat.yml
         owner: root
 
     - name: Start Filebeat service
-      command: service filebeat restart
+      command: service filebeat start
