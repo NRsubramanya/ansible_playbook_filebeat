@@ -1,0 +1,27 @@
+
+---
+- name: Install Filebeat
+  hosts: all
+  become: yes
+  any_errors_fatal: true
+
+  tasks:
+
+    - name: Check Kafka service status
+      systemd:
+        name: kafka
+        state: running
+      register: kafka_service_status
+
+    - name: Debug Kafka service status
+      debug:
+        var: kafka_service_status
+
+    - name: Generate Filebeat configuration
+      template:
+        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_config.j2
+        dest: /etc/filebeat/filebeat.yml
+        owner: root
+
+    - name: Start Filebeat service
+      command: service filebeat restart
