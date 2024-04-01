@@ -6,6 +6,7 @@ filebeat.inputs:
     fields:
       type: system
 
+
 {% if kafka_service_status.status.ActiveState == "active" %}
   - type: filestream
     id: kafka-server
@@ -14,6 +15,34 @@ filebeat.inputs:
     fields:
       type: kafka
 {% endif %}
+
+{% if zookeeper_service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: zookeeper
+    paths:
+      - /var/log/kafka/zookeeper.log
+    fields:
+      type: kafka
+{% endif %}
+
+{% if connect_service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: connect-server
+    paths:
+      - /var/log/connect/connect.log
+    fields:
+      type: kafka
+{% endif %}
+
+{% if control-center__service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: control-center-server
+    paths:
+      - /var/log/control-center/control-center.log
+    fields:
+      type: kafka
+{% endif %}
+
 
 output.logstash:
   hosts: ["localhost:5044"]

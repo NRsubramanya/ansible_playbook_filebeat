@@ -21,7 +21,26 @@
       systemd:
         name: confluent-server
         state: started
-      register: kafka_service_status   
+      register: kafka_service_status
+
+    - name: Check zookeeper service status
+      systemd:
+        name: confluent-zookeeper
+        state: started
+      register: zookeeper_service_status
+
+    - name: Check connect service status
+      systemd:
+        name: confluent-kafka-connect
+        state: started
+      register: connect_service_status
+
+    - name: Check control-center service status
+      systemd:
+        name: confluent-control-center
+        state: started
+      register: control-center_service_status
+
 
     - name: Generate Filebeat configuration
       template:
