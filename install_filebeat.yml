@@ -39,7 +39,7 @@
       systemd:
         name: confluent-control-center
         state: started
-      register: control-center_service_status
+      register: control_center_service_status
 
 
     - name: Generate Filebeat configuration

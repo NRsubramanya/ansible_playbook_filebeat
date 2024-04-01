@@ -34,7 +34,7 @@ filebeat.inputs:
       type: kafka
 {% endif %}
 
-{% if control-center__service_status.status.ActiveState == "active" %}
+{% if control_center_service_status.status.ActiveState == "active" %}
   - type: filestream
     id: control-center-server
     paths:
