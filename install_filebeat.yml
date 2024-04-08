@@ -44,7 +44,7 @@
 
     - name: Generate Filebeat configuration
       template:
-        src: /home/cloud_user/ansible_playbook_filebeat/filebeat_config.j2
+        src: /ansible_playbook_filebeat/filebeat_config.j2
         dest: /etc/filebeat/filebeat.yml
         owner: root
 

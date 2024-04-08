@@ -20,7 +20,7 @@ filebeat.inputs:
   - type: filestream
     id: zookeeper
     paths:
-      - /var/log/kafka/zookeeper.log
+      - "{{ zookeeper_log }}"
     fields:
       type: kafka
 {% endif %}
@@ -29,7 +29,7 @@ filebeat.inputs:
   - type: filestream
     id: connect-server
     paths:
-      - /var/log/kafka/connect.log
+      - "{{ connect_log }}"
     fields:
       type: kafka
 {% endif %}
@@ -38,7 +38,7 @@ filebeat.inputs:
   - type: filestream
     id: control-center-server
     paths:
-      - /var/log/control-center/control-center.log
+      - "{{ control-center_log }}"
     fields:
       type: kafka
 {% endif %}
