@@ -11,11 +11,7 @@ all:
     kafka_log: /var/log/kafka/server.log
     connect_log: /var/log/kafka/connect.log
     zookeeper_log: /var/log/kafka/ zookeeper-gc.log
-<<<<<<< HEAD
     control_center_log: /var/log/kafka/controller.log
-=======
-
->>>>>>> d3fd4ff5f3abbeafe1b8df40e1bee13cf11f18e3
 
 zookeeper:
   hosts:
