@@ -17,7 +17,12 @@
         apt-get install apt-transport-https
         echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
         apt-get update && apt-get install filebeat
+<<<<<<< HEAD
 
+=======
+      
+      
+>>>>>>> d3fd4ff5f3abbeafe1b8df40e1bee13cf11f18e3
     - name: Enable Kafka module for Filebeat
       command: filebeat modules enable kafka
    
@@ -38,12 +43,6 @@
         name: "{{ connect_service_name }}"
         state: started
       register: connect_service_status
-
-    - name: Check control-center service status
-      systemd:
-        name: "{{ control-center_service_name }}"
-        state: started
-      register: control_center_service_status
 
 
     - name: Generate Filebeat configuration
