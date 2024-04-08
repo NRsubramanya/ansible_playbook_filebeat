@@ -11,7 +11,7 @@ filebeat.inputs:
   - type: filestream
     id: kafka-server
     paths:
-      - /var/log/kafka/server.log
+      - "{{ kafka_log }}"
     fields:
       type: kafka
 {% endif %}
@@ -29,7 +29,7 @@ filebeat.inputs:
   - type: filestream
     id: connect-server
     paths:
-      - /var/log/connect/connect.log
+      - /var/log/kafka/connect.log
     fields:
       type: kafka
 {% endif %}

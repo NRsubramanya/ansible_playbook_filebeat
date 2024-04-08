@@ -19,25 +19,25 @@
    
     - name: Check Kafka service status
       systemd:
-        name: confluent-server
+        name: "{{ kafka_service_name }}"
         state: started
       register: kafka_service_status
 
     - name: Check zookeeper service status
       systemd:
-        name: confluent-zookeeper
+        name: "{{ zookeeper_service_name }}"
         state: started
       register: zookeeper_service_status
 
     - name: Check connect service status
       systemd:
-        name: confluent-kafka-connect
+        name: "{{ connect_service_name }}"
         state: started
       register: connect_service_status
 
     - name: Check control-center service status
       systemd:
-        name: confluent-control-center
+        name: "{{ control-center_service_name }}"
         state: started
       register: control_center_service_status
 
