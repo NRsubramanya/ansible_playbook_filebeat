@@ -34,17 +34,7 @@ filebeat.inputs:
       type: kafka
 {% endif %}
 
-{% if control_center_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: control-center-server
-    paths:
-      - "{{ control-center_log }}"
-    fields:
-      type: kafka
-{% endif %}
 
 
 output.logstash:
   hosts: ["localhost:5044"]
-
-
