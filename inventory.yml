@@ -8,10 +8,10 @@ all:
     zookeeper_service_name: confluent-zookeeper
     connect_service_name: confluent-kafka-connect
     #log path
-    kafka_log: /path/server.log
-    connect_log: /path/connect.log
-    zookeeper_log: /path/zookeeper.log
-    control_center_log: /path/controller.log
+    kafka_log: /var/log/kafka/server.log
+    connect_log: /var/log/kafka/connect.log
+    zookeeper_log: /var/log/kafka/zookeeper-gc.log
+    #control_center_log: /path/controller.log
 
 zookeeper:
   hosts:
@@ -25,6 +25,6 @@ kafka_broker:
     kafka2:
     kafka3:
 
-kafka_connect:
-  hosts:
-    kafka-connect:
+#kafka_connect:
+ # hosts:
+  #  kafka-connect:
