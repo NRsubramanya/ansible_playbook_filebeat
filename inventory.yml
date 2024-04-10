@@ -2,7 +2,7 @@ all:
   vars:
     ansible_ssh_private_key_file: /root/.ssh/id_rsa
     ansible_user: root
-    filebeat_rpm_path: "/path/filebeat-8.11.1-x86_64.rpm"
+    filebeat_rpm_path: "/ansible_playbook_filebeat/filebeat-8.11.1-x86_64.rpm"
     #Confluent service names
     kafka_service_name: confluent-server
     zookeeper_service_name: confluent-zookeeper
