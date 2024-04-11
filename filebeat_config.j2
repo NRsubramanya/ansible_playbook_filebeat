@@ -2,39 +2,11 @@ filebeat.inputs:
   - type: filestream
     id: Sys-logs
     paths:
-      - /path/syslog
+      - /var/log/syslog
     fields:
       type: system
 
 
-{% if kafka_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: kafka-server
-    paths:
-      - "{{ kafka_log }}"
-    fields:
-      type: kafka
-{% endif %}
-
-{% if zookeeper_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: zookeeper
-    paths:
-      - "{{ zookeeper_log }}"
-    fields:
-      type: kafka
-{% endif %}
-
-{% if connect_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: connect-server
-    paths:
-      - "{{ connect_log }}"
-    fields:
-      type: kafka
-{% endif %}
-
-
 
 output.logstash:
-  hosts: ["localhost:5044"]
+  hosts: ["{{ vm_ip_address }}":"{{ log_stash_port }}"]

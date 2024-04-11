@@ -4,14 +4,11 @@ all:
     ansible_user: root
     filebeat_rpm_path: "/path/filebeat-8.11.1-x86_64.rpm"
     #Confluent service names
-    kafka_service_name: confluent-server
-    zookeeper_service_name: confluent-zookeeper
-    connect_service_name: confluent-kafka-connect
     #log path
-    kafka_log: /path/server.log
-    connect_log: /path/connect.log
-    zookeeper_log: /path/zookeeper.log
-    control_center_log: /path/controller.log
+    #Log stash output vars
+    vm_ip_address: localhost
+    log_stash_port: 5044
+
 
 zookeeper:
   hosts:
