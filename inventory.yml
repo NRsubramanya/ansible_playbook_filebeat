@@ -5,17 +5,9 @@ all:
     filebeat_rpm_path: "/ansible_playbook_filebeat/filebeat-8.11.1-x86_64.rpm"
     #Confluent service names
     #log path
-<<<<<<< HEAD
     #Log stash output vars
     vm_ip_address: localhost
     log_stash_port: 5044
-
-=======
-    kafka_log: /var/log/kafka/server.log
-    connect_log: /var/log/kafka/connect.log
-    zookeeper_log: /var/log/kafka/zookeeper-gc.log
-    #control_center_log: /path/controller.log
->>>>>>> 3998523a6b16d316a3dde5b2ddac72ec97de4ba9
 
 zookeeper:
   hosts:
