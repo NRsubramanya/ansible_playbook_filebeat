@@ -9,4 +9,4 @@ filebeat.inputs:
 
 
 output.logstash:
-  hosts: ["{{ vm_ip_address }}":"{{ log_stash_port }}"]
+  hosts: ["{{ kafka2 }}":"{{ logstash_port }}"]

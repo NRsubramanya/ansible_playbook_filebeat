@@ -6,8 +6,7 @@ all:
     #Confluent service names
     #log path
     #Log stash output vars
-    vm_ip_address: localhost
-    log_stash_port: 5044
+    logstash_port: 5044
 
 zookeeper:
   hosts:

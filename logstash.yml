@@ -1,0 +1,45 @@
+---
+- name: Deploy Logstash
+  hosts: kafka3
+  become: yes
+  any_errors_fatal: true
+
+  tasks:
+    - name: Check Docker version
+      shell: docker --version | awk '{print $3}'
+      register: docker_version_output
+
+    - name: Parse Docker version
+      set_fact:
+        docker_version: "{{ docker_version_output.stdout }}"
+
+    - name: Check if Docker version meets requirements
+      fail:
+        msg: "Docker version {{ docker_version }} does not meet the minimum required version."
+      when: docker_version | version_compare('18.06.0', '<')
+
+    - name: Check Docker Compose version
+      shell: docker-compose --version | awk '{print $3}'
+      register: docker_compose_version_output
+
+    - name: Parse Docker Compose version
+      set_fact:
+        docker_compose_version: "{{ docker_compose_version_output.stdout }}"
+
+    - name: Check if Docker Compose version meets requirements
+      fail:
+        msg: "Docker Compose version {{ docker_compose_version }} does not meet the minimum required version."
+      when: docker_compose_version | version_compare('1.28.0', '<')
+
+    - name: Clone CP Log Monitor Repository
+      git:
+        repo: git@github.com:Platformatory/kafka-cp-log-monitor.git
+        dest: /root/cp_log_monitor
+        clone: yes
+        update: yes
+
+    - name: Setup the Assets
+      shell: |
+        cd /root/cp_log_monitor
+        docker-compose up setup
+        docker-compose up -d
