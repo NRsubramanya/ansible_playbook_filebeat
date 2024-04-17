@@ -4,8 +4,17 @@ all:
     ansible_user: root
     filebeat_rpm_path: "/ansible_playbook_filebeat/filebeat-8.11.1-x86_64.rpm"
     #Confluent service names
+    kafka_service_name: confluent-server
+    zookeeper_service_name: confluent-zookeeper
+    connect_service_name: confluent-kafka-connect
+    #log path
+    kafka_log: /var/log/kafka/server.log
+    connect_log: /var/log/kafka/connect.log
+    zookeeper_log: /var/log/kafka/ zookeeper-gc.log
+
     #log path
     #Log stash output vars
+    logstash_ip: 172.23.0.1
     logstash_port: 5044
 
 zookeeper:
@@ -19,6 +28,11 @@ kafka_broker:
     kafka1:
     kafka2:
     kafka3:
+
+#server:
+ # hosts:
+  #  server1:
+   #   ansible_host: 172.31.34.98
 
 #kafka_connect:
  # hosts:

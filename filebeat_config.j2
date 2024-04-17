@@ -7,6 +7,33 @@ filebeat.inputs:
       type: system
 
 
+{% if kafka_service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: kafka-server
+    paths:
+      - "{{ kafka_log }}"
+    fields:
+      type: kafka
+{% endif %}
+
+{% if zookeeper_service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: zookeeper
+    paths:
+      - "{{ zookeeper_log }}"
+    fields:
+      type: kafka
+{% endif %}
+
+{% if connect_service_status.status.ActiveState == "active" %}
+  - type: filestream
+    id: connect-server
+    paths:
+      - "{{ connect_log }}"
+    fields:
+      type: kafka
+{% endif %}
+
 
 output.logstash:
-  hosts: kafka2:"{{ logstash_port }}"]
+  hosts: ["{{ logstash_ip }}:{{ logstash_port }}"]
