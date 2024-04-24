@@ -10,7 +10,7 @@ filebeat.inputs:
   - type: filestream
     id: kafka-server
     paths:
-      - "{{ kafka_log }}"
+      - "{{ kafka_broker_log_path }}"
     fields:
       type: kafka
 {% endif %}
@@ -19,7 +19,7 @@ filebeat.inputs:
   - type: filestream
     id: zookeeper
     paths:
-      - "{{ zookeeper_log }}"
+      - "{{ zookeeper_log_path }}"
     fields:
       type: kafka
 {% endif %}

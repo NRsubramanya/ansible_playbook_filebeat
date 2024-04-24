@@ -1,7 +1,7 @@
 ---
 - name: Copy filebeat binary file
   copy:
-    src: "{{ filebeat_rpm_path }}"
+    src: "{{ filebeat_remote_path }}"
     dest: "/tmp/filebeat-8.11.1-x86_64.rpm"
   when: ansible_facts['distribution'] == 'RedHat'
 
