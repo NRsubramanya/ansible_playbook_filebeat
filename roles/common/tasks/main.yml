@@ -3,10 +3,27 @@
   ansible.builtin.setup:
     filter: ansible_distribution
 
-- name: Get current hostname
+- name: Get hostname
   shell: hostname
-  register: current_hostname
+  register: current_hostname_raw
 
-- name: Debug current hostname
-  ansible.builtin.debug:
-    var: current_hostname.stdout
+- name: Strip newline from current hostname
+  set_fact:
+    current_hostname: "{{ current_hostname_raw.stdout | trim }}"
+
+- name: Check Docker version
+  shell: docker --version | awk '{print $3}'
+  register: docker_version_output
+
+- name: Parse Docker version
+  set_fact:
+    docker_version: "{{ docker_version_output.stdout }}"
+
+- name: Check Docker Compose version
+  shell: docker-compose --version | awk '{print $3}'
+  register: docker_compose_version_output
+
+- name: Parse Docker Compose version
+  set_fact:
+    docker_compose_version: "{{ docker_compose_version_output.stdout }}"
+
