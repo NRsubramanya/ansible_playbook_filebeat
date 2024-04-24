@@ -3,3 +3,14 @@
   ansible.builtin.setup:
     filter: ansible_distribution
 
+- name: Get current hostname
+  hosts: all
+  gather_facts: no  # Skip gathering facts to speed up execution
+  tasks:
+    - name: Get current hostname
+      ansible.builtin.shell: hostname
+      register: current_hostname
+
+    - name: Debug current hostname
+      ansible.builtin.debug:
+        var: current_hostname.stdout

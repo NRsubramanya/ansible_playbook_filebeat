@@ -7,32 +7,21 @@ filebeat.inputs:
       type: system
 
 
-{% if kafka_service_status.status.ActiveState == "active" %}
   - type: filestream
     id: kafka-server
     paths:
       - "{{ kafka_log }}"
     fields:
       type: kafka
-{% endif %}
+    when: inventory_hostname in groups['kafka_broker']
 
-{% if zookeeper_service_status.status.ActiveState == "active" %}
   - type: filestream
     id: zookeeper
     paths:
       - "{{ zookeeper_log }}"
     fields:
       type: kafka
-{% endif %}
-
-{% if connect_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: connect-server
-    paths:
-      - "{{ connect_log }}"
-    fields:
-      type: kafka
-{% endif %}
+    when: inventory_hostname in groups['zookeeper']
 
 
 output.logstash:

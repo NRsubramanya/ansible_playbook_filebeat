@@ -6,5 +6,4 @@
 
   roles:
     - common
-    - kafka
     - filebeat
