@@ -1,0 +1,5 @@
+---
+- name: Check OS distribution
+  ansible.builtin.setup:
+    filter: ansible_distribution
+

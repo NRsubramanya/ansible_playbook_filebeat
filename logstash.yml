@@ -1,6 +1,6 @@
 ---
 - name: Deploy Logstash
-  hosts: kafka3
+  hosts: server1
   become: yes
   any_errors_fatal: true
 
@@ -13,10 +13,12 @@
       set_fact:
         docker_version: "{{ docker_version_output.stdout }}"
 
-    - name: Check if Docker version meets requirements
-      fail:
-        msg: "Docker version {{ docker_version }} does not meet the minimum required version."
-      when: docker_version | version_compare('18.06.0', '<')
+    - name: Verify Docker version
+      assert:
+        that:
+          - "docker_version is version('18.06.0', '>=')"
+        fail_msg: >-
+          Selected docker version: Docker must be upgraded to version 18.06.0 or above
 
     - name: Check Docker Compose version
       shell: docker-compose --version | awk '{print $3}'
@@ -26,10 +28,12 @@
       set_fact:
         docker_compose_version: "{{ docker_compose_version_output.stdout }}"
 
-    - name: Check if Docker Compose version meets requirements
-      fail:
-        msg: "Docker Compose version {{ docker_compose_version }} does not meet the minimum required version."
-      when: docker_compose_version | version_compare('1.28.0', '<')
+    - name: Verify Docker Compose version
+      assert:
+        that:
+          - "docker_compose_version is version('1.28.0', '>=')"
+        fail_msg: >-
+          Selected docker version: docker-compose  must be upgraded to version 1.28.0 or above
 
     - name: Clone CP Log Monitor Repository
       git:

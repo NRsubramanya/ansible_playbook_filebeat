@@ -1,0 +1,17 @@
+- name: Check Kafka service status
+  systemd:
+    name: "{{ kafka_service_name }}"
+    state: started
+  register: kafka_service_status
+
+- name: Check zookeeper service status
+  systemd:
+    name: "{{ zookeeper_service_name }}"
+    state: started
+  register: zookeeper_service_status
+
+- name: Check connect service status 
+  systemd:
+    name: "{{ connect_service_name }}"
+    state: started
+  register: connect_service_status
