@@ -1,10 +1,4 @@
 filebeat.inputs:
-  - type: filestream
-    id: Sys-logs
-    paths:
-      - /var/log/syslog
-    fields:
-      type: system
 
 {% if current_hostname in groups['kafka_broker'] %}
   - type: filestream
