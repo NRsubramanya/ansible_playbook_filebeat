@@ -6,8 +6,7 @@ filebeat.inputs:
     fields:
       type: system
 
-
-{% if kafka_service_status.status.ActiveState == "active" %}
+{% if current_hostname in groups['kafka_broker'] %}
   - type: filestream
     id: kafka-server
     paths:
@@ -16,7 +15,7 @@ filebeat.inputs:
       type: kafka
 {% endif %}
 
-{% if zookeeper_service_status.status.ActiveState == "active" %}
+{% if current_hostname in groups['zookeeper'] %}
   - type: filestream
     id: zookeeper
     paths:
@@ -24,16 +23,6 @@ filebeat.inputs:
     fields:
       type: kafka
 {% endif %}
-
-{% if connect_service_status.status.ActiveState == "active" %}
-  - type: filestream
-    id: connect-server
-    paths:
-      - "{{ connect_log }}"
-    fields:
-      type: kafka
-{% endif %}
-
 
 output.logstash:
   hosts: ["{{ logstash_ip }}:{{ logstash_port }}"]
