@@ -1,18 +1,4 @@
 ---
-- name: Verify Docker version
-  assert:
-    that:
-      - "docker_version is version('18.06.0', '>=')"
-    fail_msg: >-
-      Selected docker version: Docker must be upgraded to version 18.06.0 or above
-
-- name: Verify Docker Compose version
-  assert:
-    that:
-      - "docker_compose_version is version('1.28.0', '>=')"
-    fail_msg: >-
-      Selected docker version: docker-compose  must be upgraded to version 1.28.0 or above
-
 - name: Clone CP Log Monitor Repository
   git:
     repo: git@github.com:Platformatory/kafka-cp-log-monitor.git

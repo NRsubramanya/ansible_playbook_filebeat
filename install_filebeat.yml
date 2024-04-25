@@ -1,10 +1,18 @@
 ---
+- name: Setup Logstash and Kibana on the Kibana Server VM
+  hosts: server
+  become: yes
+  any_errors_fatal: true
+
+  roles:
+    - logstash
+
 - name: Install Filebeat
-  hosts: all
+  hosts: zookeeper:kafka_broker
   become: yes
   any_errors_fatal: true
 
   roles:
     - common
-    - logstash
     - filebeat
+

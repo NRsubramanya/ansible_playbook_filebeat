@@ -8,7 +8,7 @@ all:
     connect_log_path: /var/log/kafka/connect.log
     zookeeper_log_path: /var/log/kafka/ zookeeper-gc.log
 
-    logstash_ip: 172.23.0.1
+    logstash_ip: 172.31.103.209
     logstash_port: 5044
 
 zookeeper:
@@ -22,7 +22,7 @@ kafka_broker:
 server:
   hosts:
     server1:
-      ansible_host: 172.31.34.98
+      ansible_host: 172.31.103.209
 
 #kafka_connect:
  # hosts:
