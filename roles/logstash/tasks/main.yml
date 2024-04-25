@@ -5,6 +5,13 @@
     dest: /root/cp_log_monitor
     clone: yes
     update: yes
+  when: airgap_environment == "disabled"
+
+- name: Copy CP-Log Monitor Folder
+  copy:
+    src: "{{ cp_log_monitor_folder_path }}"
+    dest: "/root/cp_log_monitor"
+  when: airgap_environment == "enabled"
 
 - name: Setup the Assets
   shell: |

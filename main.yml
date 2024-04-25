@@ -7,7 +7,7 @@
   roles:
     - logstash
 
-- name: Install Filebeat
+- name: Setup Filebeat Service
   hosts: zookeeper:kafka_broker
   become: yes
   any_errors_fatal: true

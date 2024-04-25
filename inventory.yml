@@ -11,6 +11,10 @@ all:
     logstash_ip: 172.31.103.209
     logstash_port: 5044
 
+    cp_log_monitor_folder_path: /ansible_playbook_filebeat/cp-log-monitor
+
+    airgap_environment: enabled
+
 zookeeper:
   hosts:
     zookeeper1:
@@ -22,8 +26,12 @@ kafka_broker:
 server:
   hosts:
     server1:
-      ansible_host: 172.31.103.209
+      ansible_host: "{{ logstash_ip }}"
 
 #kafka_connect:
  # hosts:
   #  kafka-connect:
+
+#control_center
+ # hosts:
+  # control-center

@@ -1,22 +1,6 @@
 ---
-- name: Copy filebeat binary file
-  copy:
-    src: "{{ filebeat_remote_path }}"
-    dest: "/tmp/filebeat-8.11.1-x86_64.rpm"
-  when: ansible_facts['distribution'] == 'RedHat'
-
 - name: Install Filebeat Service
-  shell: rpm -vi /tmp/filebeat-8.11.1-x86_64.rpm
-  when: ansible_facts['distribution'] == 'RedHat'
-
-- name: Install Filebeat Service
-  shell: |
-    apt update
-    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-    apt-get install apt-transport-https
-    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
-    apt-get update && apt-get install filebeat
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  include_tasks: install_filebeat.yml
 
 - name: Enable Kafka module for Filebeat
   command: filebeat modules enable kafka
@@ -25,7 +9,7 @@
 
 - name: Generate Filebeat configuration
   template:
-    src: /ansible_playbook_filebeat/roles/filebeat/files/filebeat_config.j2
+    src: /ansible_playbook_filebeat/roles/filebeat/templates/filebeat_config.j2
     dest: /etc/filebeat/filebeat.yml
     owner: root
 

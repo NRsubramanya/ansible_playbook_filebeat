@@ -1,2 +1,2 @@
-ansible-playbook install_filebeat.yml -i inventory.yml
+ansible-playbook main.yml -i inventory.yml
 
