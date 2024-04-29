@@ -1,17 +1,30 @@
 ---
 - name: Install Filebeat Service
   include_tasks: install_filebeat.yml
+  tags:
+    - filebeat
+    - filebeat_install
 
 - name: Enable Kafka module for Filebeat
   command: filebeat modules enable kafka
   args:
     creates: /etc/filebeat/modules.d/kafka.yml
+  tags:
+    - filebeat
+    - enable_kafka_module
 
 - name: Generate Filebeat configuration
   template:
     src: /ansible_playbook_filebeat/roles/filebeat/templates/filebeat_config.j2
     dest: /etc/filebeat/filebeat.yml
     owner: root
+  tags:
+    - filebeat
+    - generate_filebeat_config
 
 - name: Start Filebeat service
   command: service filebeat start
+  tags:
+    - filebeat
+    - start_filebeat
+

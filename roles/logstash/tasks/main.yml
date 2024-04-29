@@ -6,15 +6,25 @@
     clone: yes
     update: yes
   when: airgap_environment == "disabled"
+  tags:
+    - logstash
+    - add_repository
 
-- name: Copy CP-Log Monitor Folder
+- name: Copy CP-Log Monitor Repository
   copy:
     src: "{{ cp_log_monitor_folder_path }}"
     dest: "/root/cp_log_monitor"
   when: airgap_environment == "enabled"
+  tags:
+    - logstash
+    - add_repository
 
 - name: Setup the Assets
   shell: |
     cd /root/cp_log_monitor
     docker-compose up setup
     docker-compose up -d
+  tags:
+    - logstash
+    - setup_assets
+

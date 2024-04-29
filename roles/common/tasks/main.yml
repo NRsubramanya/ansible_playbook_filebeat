@@ -2,11 +2,21 @@
 - name: Check OS distribution
   ansible.builtin.setup:
     filter: ansible_distribution
+  tags:
+    - common
+    - check_os
 
 - name: Get hostname
   shell: hostname
   register: current_hostname_raw
+  tags:
+    - common
+    - get_hostname
 
 - name: Strip newline from current hostname
   set_fact:
     current_hostname: "{{ current_hostname_raw.stdout | trim }}"
+  tags:
+    - common
+    - get_hostname
+
