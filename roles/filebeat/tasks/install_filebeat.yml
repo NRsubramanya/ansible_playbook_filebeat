@@ -1,12 +1,37 @@
-- name: Copy filebeat binary file
-  copy:
-    src: "{{ filebeat_remote_path }}"
-    dest: "/tmp/filebeat-8.11.1-x86_64.rpm"
-  when: ansible_facts['distribution'] == 'RedHat'
+- name: Copy Filebeat Installation Package
+  include_tasks: copy_filebeat_package.yml
+  when: airgap environment = "enabled"
 
+ 
 - name: Install Filebeat Service
   shell: rpm -vi /tmp/filebeat-8.11.1-x86_64.rpm
-  when: ansible_facts['distribution'] == 'RedHat'
+  when:
+    - ansible_facts['distribution'] == 'RedHat'
+    - airgap environment = "enabled"
+
+
+- name: Install Filebeat Service
+  shell: rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+  template:
+    src: /ansible_playbook_filebeat/roles/filebeat/templates/elastic.repo.j2
+    dest: /etc/yum.repos.d/elastic.repo
+    owner: root
+    group: root
+    mode: '0644'
+  shell: |
+    - yum install filebeat
+    - systemctl enable filebeat  
+  when:
+    - ansible_facts['distribution'] == 'RedHat'
+    - airgap environment = "disabled"
+
+
+- name: Install Filebeat Service
+  shell: dpkg -i "{{ filebeat_deb_destination_path }}"
+  when:
+    - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+    - airgap environment = "enabled"
+
 
 - name: Install Filebeat Service
   shell: |
@@ -15,4 +40,12 @@
     apt-get install apt-transport-https
     echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
     apt-get update && apt-get install filebeat
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  when: 
+    - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+    - airgap environment = "disabled"
+
+
+
+
+
+
