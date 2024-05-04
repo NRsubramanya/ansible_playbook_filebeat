@@ -1,0 +1,3 @@
+[submodule "kafka-cp-log-monitor"]
+	path = kafka-cp-log-monitor
+	url = git@github.com:Platformatory/kafka-cp-log-monitor.git

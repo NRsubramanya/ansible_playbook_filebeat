@@ -12,8 +12,8 @@
 
 - name: Copy CP-Log Monitor Repository
   copy:
-    src: "{{ cp_log_monitor_folder_path }}"
-    dest: "/root/cp_log_monitor"
+    src: "{{ cp_log_monitor_source_path }}"
+    dest: "{{ cp_log_monitor_destination_path }}"
   when: airgap_environment == "enabled"
   tags:
     - logstash
@@ -21,7 +21,7 @@
 
 - name: Setup the Assets
   shell: |
-    cd /root/cp_log_monitor
+    cd "{{ cp_log_monitor_destination_path }}"
     docker-compose up setup
     docker-compose up -d
   tags:
