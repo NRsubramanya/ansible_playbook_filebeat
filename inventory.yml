@@ -12,11 +12,11 @@ all:
     connect_log_path: /var/log/kafka/connect.log
     zookeeper_log_path: /var/log/kafka/ zookeeper-gc.log
 
-    logstash_ip: 172.31.103.209
+    logstash_ip: 172.31.105.108
     logstash_port: 5044
 
     cp_log_monitor_source_path: /ansible_playbook_filebeat/kafka-cp-log-monitor
-    cp_log_monitor_destination_path: /root/kafka-cp-log-monitor
+    cp_log_monitor_destination_path: /root
     
     airgap_environment: enabled
 

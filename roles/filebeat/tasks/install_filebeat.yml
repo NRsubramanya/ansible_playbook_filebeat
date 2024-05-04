@@ -1,6 +1,6 @@
 - name: Copy Filebeat Installation Package
   include_tasks: copy_filebeat_package.yml
-  when: airgap environment = "enabled"
+  when: airgap_environment == "enabled"
 
  
 - name: Install Filebeat Service
@@ -10,27 +10,34 @@
     - airgap_environment = "enabled"
 
 
-- name: Install Filebeat Service
-  shell: rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
-  template:
-    src: /ansible_playbook_filebeat/roles/filebeat/templates/elastic.repo.j2
-    dest: /etc/yum.repos.d/elastic.repo
-    owner: root
-    group: root
-    mode: '0644'
-  shell: |
-    - yum install filebeat
-    - systemctl enable filebeat  
-  when:
-    - ansible_facts['distribution'] == 'RedHat'
-    - airgap environment = "disabled"
+- name: Install Filebeat Service (RedHat)
+  block:
+    - name: Import Elasticsearch GPG key
+      shell: rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+      when: airgap_environment == "disabled"
 
+    - name: Copy elastic.repo file
+      template:
+        src: /ansible_playbook_filebeat/roles/filebeat/templates/elastic.repo.j2
+        dest: /etc/yum.repos.d/elastic.repo
+        owner: root
+        group: root
+        mode: '0644'
+      when: airgap_environment == "disabled"
+
+    - name: Install Filebeat Package
+      shell: yum install filebeat -y
+      when: ansible_facts['distribution'] == 'RedHat' and airgap_environment == "disabled"
+
+    - name: Enable Filebeat Service
+      shell: systemctl enable filebeat
+      when: ansible_facts['distribution'] == 'RedHat' and airgap_environment == "disabled"
 
 - name: Install Filebeat Service
   shell: dpkg -i "{{ filebeat_deb_destination_path }}"
   when:
     - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
-    - airgap_environment = "enabled"
+    - airgap_environment == "enabled"
 
 
 - name: Install Filebeat Service
@@ -42,7 +49,7 @@
     apt-get update && apt-get install filebeat
   when: 
     - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
-    - airgap environment = "disabled"
+    - airgap_environment == "disabled"
 
 
 

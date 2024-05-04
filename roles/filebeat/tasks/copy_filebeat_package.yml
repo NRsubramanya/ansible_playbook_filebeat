@@ -8,6 +8,5 @@
   copy:
     src: "{{ filebeat_deb_source_path }}"
     dest: "{{ filebeat_deb_destination_path }}"
-  when:
-    - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
 

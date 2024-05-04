@@ -21,7 +21,7 @@
 
 - name: Setup the Assets
   shell: |
-    cd "{{ cp_log_monitor_destination_path }}"
+    cd "{{ cp_log_monitor_destination_path }}"/kafka-cp-log-monitor
     docker-compose up setup
     docker-compose up -d
   tags:
