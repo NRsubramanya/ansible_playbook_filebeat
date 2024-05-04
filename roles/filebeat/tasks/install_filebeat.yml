@@ -4,10 +4,10 @@
 
  
 - name: Install Filebeat Service
-  shell: rpm -vi /tmp/filebeat-8.11.1-x86_64.rpm
+  shell: rpm -vi "{{ filebeat_rpm_destination_path }}"
   when:
     - ansible_facts['distribution'] == 'RedHat'
-    - airgap environment = "enabled"
+    - airgap_environment = "enabled"
 
 
 - name: Install Filebeat Service
@@ -30,7 +30,7 @@
   shell: dpkg -i "{{ filebeat_deb_destination_path }}"
   when:
     - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
-    - airgap environment = "enabled"
+    - airgap_environment = "enabled"
 
 
 - name: Install Filebeat Service
