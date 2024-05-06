@@ -5,6 +5,12 @@
     - filebeat
     - filebeat_install
 
+- name: Enable Filebeat Service
+  shell: systemctl enable filebeat
+  tags:
+    - filebeat
+    - enable_filebeat
+
 - name: Enable Kafka module for Filebeat
   command: filebeat modules enable kafka
   args:
