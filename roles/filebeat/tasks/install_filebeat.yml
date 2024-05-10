@@ -2,6 +2,8 @@
   include_tasks: copy_filebeat_package.yml
   when: airgap_environment == "enabled"
 
+- name: Install Filebeat Service 
+  shell: tar -xzvf /etc/filebeat.tar.gz -C /etc
  
 - name: Install Filebeat Service (Redhat)
   shell: rpm -vi "{{ filebeat_rpm_destination_path }}"

@@ -6,6 +6,8 @@ all:
     filebeat_rpm_destination_path: "/tmp/filebeat.rpm"
     filebeat_deb_source_path: "/ansible_playbook_filebeat/roles/filebeat/files/filebeat.deb"
     filebeat_deb_destination_path: "/tmp/filebeat.deb"
+    filebeat_tar_source_path: "/ansible_playbook_filebeat/roles/filebeat/files/filebeat.tar.gz"
+    filebeat_tar_destination_path: "/etc/filebeat.tar.gz"
     
     #log path
     kafka_broker_log_path: /var/log/kafka/server.log
@@ -18,7 +20,9 @@ all:
     cp_log_monitor_source_path: /ansible_playbook_filebeat/kafka-cp-log-monitor
     cp_log_monitor_destination_path: /root
     
-    airgap_environment: disabled
+    airgap_environment: enabled
+    filebeat_installation_by_tar_file: enabled
+    #disable or enable the variable as per requirement
 
 zookeeper:
   hosts:
