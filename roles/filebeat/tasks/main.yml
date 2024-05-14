@@ -15,6 +15,7 @@
   command: filebeat modules enable kafka
   args:
     creates: /etc/filebeat/modules.d/kafka.yml
+    chdir: /etc/filebeat
   tags:
     - filebeat
     - enable_kafka_module

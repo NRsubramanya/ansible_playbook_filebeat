@@ -19,14 +19,16 @@
         mode: '0644'
       when: filebeat_installation_by_tar_file == "enabled"
 
-    - name: Give permissions
-      shell: |
-        export PATH=/etc/filebeat:$PATH
-        chmod 644 /etc/filebeat/filebeat.yml
-      when: filebeat_installation_by_tar_file == "enabled"
-
     - name: Reload Daemon
       shell: systemctl daemon-reload
+      when: filebeat_installation_by_tar_file == "enabled"
+
+    - name: EXPORT PATH
+      shell: export PATH=/etc/filebeat:$PATH
+      when: filebeat_installation_by_tar_file == "enabled"
+  
+    - name: Give permissions
+      shell:  chmod 644 /etc/filebeat/filebeat.yml
       when: filebeat_installation_by_tar_file == "enabled"
  
 - name: Install Filebeat Service (Redhat)
