@@ -2,8 +2,32 @@
   include_tasks: copy_filebeat_package.yml
   when: airgap_environment == "enabled"
 
-- name: Install Filebeat Service 
-  shell: tar -xzvf /etc/filebeat.tar.gz -C /etc
+- name: Install Filebeat Service (TAR) 
+  block:
+    - name: Extract tar file
+      shell: |
+        tar -xzvf /tmp/filebeat.tar.gz -C /etc
+        mv /etc/filebeat-8.13.4-linux-x86_64 /etc/filebeat
+      when: filebeat_installation_by_tar_file == "enabled" 
+    
+    - name: Create systemd process for filebeat
+      template:
+        src: /ansible_playbook_filebeat/roles/filebeat/templates/filebeat.service.j2
+        dest: /etc/systemd/system/filebeat.service
+        owner: root
+        group: root
+        mode: '0644'
+      when: filebeat_installation_by_tar_file == "enabled"
+
+    - name: Give permissions
+      shell: |
+        export PATH=/etc/filebeat:$PATH
+        chmod 644 /etc/filebeat/filebeat.yml
+      when: filebeat_installation_by_tar_file == "enabled"
+
+    - name: Reload Daemon
+      shell: systemctl daemon-reload
+      when: filebeat_installation_by_tar_file == "enabled"
  
 - name: Install Filebeat Service (Redhat)
   shell: rpm -vi "{{ filebeat_rpm_destination_path }}"
@@ -40,6 +64,7 @@
   when:
     - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
     - airgap_environment == "enabled"
+    - filebeat_installation_by_tar_file == "disabled"
 
 
 - name: Install Filebeat Service (Ubuntu/Debian)

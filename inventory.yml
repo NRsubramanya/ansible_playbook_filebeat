@@ -7,14 +7,14 @@ all:
     filebeat_deb_source_path: "/ansible_playbook_filebeat/roles/filebeat/files/filebeat.deb"
     filebeat_deb_destination_path: "/tmp/filebeat.deb"
     filebeat_tar_source_path: "/ansible_playbook_filebeat/roles/filebeat/files/filebeat.tar.gz"
-    filebeat_tar_destination_path: "/etc/filebeat.tar.gz"
+    filebeat_tar_destination_path: "/tmp/filebeat.tar.gz"
     
     #log path
     kafka_broker_log_path: /var/log/kafka/server.log
     connect_log_path: /var/log/kafka/connect.log
     zookeeper_log_path: /var/log/kafka/ zookeeper-gc.log
 
-    logstash_ip: 172.31.107.73
+    logstash_ip: 172.31.110.50
     logstash_port: 5044
 
     cp_log_monitor_source_path: /ansible_playbook_filebeat/kafka-cp-log-monitor
