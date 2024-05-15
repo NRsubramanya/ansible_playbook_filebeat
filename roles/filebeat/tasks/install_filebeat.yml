@@ -23,9 +23,13 @@
       shell: systemctl daemon-reload
       when: filebeat_installation_by_tar_file == "enabled"
 
-    - name: EXPORT PATH
-      shell: export PATH=/etc/filebeat:$PATH
-      when: filebeat_installation_by_tar_file == "enabled"
+    - name: Add /etc/filebeat to PATH in .bashrc
+      lineinfile:
+        path: ~/.bashrc
+        line: 'export PATH="/etc/filebeat:$PATH"'
+        insertafter: EOF
+        state: present
+      become: yes
   
     - name: Give permissions
       shell:  chmod 644 /etc/filebeat/filebeat.yml
