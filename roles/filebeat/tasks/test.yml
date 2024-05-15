@@ -4,7 +4,7 @@
 
 - name: Install Filebeat Service (TAR) 
   block:
-    - name: Extract tar file
+    - name: Extract tar file (TAR)
       shell: |
         tar -xzvf /tmp/filebeat.tar.gz -C /etc
         mv /etc/filebeat-8.13.4-linux-x86_64 /etc/filebeat
@@ -13,7 +13,7 @@
         cp -r /usr/share/filebeat/filebeat /usr/share/filebeat/bin
       when: filebeat_installation_by_tar_file == "enabled" 
     
-    - name: Create systemd process for filebeat
+    - name: Create systemd process for filebeat (TAR)
       template:
         src: /ansible_playbook_filebeat/roles/filebeat/templates/filebeat.service.j2
         dest: /etc/systemd/system/filebeat.service
@@ -22,11 +22,11 @@
         mode: '0644'
       when: filebeat_installation_by_tar_file == "enabled"
 
-    - name: Reload Daemon
+    - name: Reload Daemon (TAR)
       shell: systemctl daemon-reload
       when: filebeat_installation_by_tar_file == "enabled"
 
-    - name: Add /etc/filebeat to PATH in .bashrc
+    - name: Add filebeat binary to PATH in .bashrc
       lineinfile:
         path: ~/.bashrc
         line: 'export PATH="/usr/share/filebeat/bin/filebeat:$PATH"'
@@ -35,7 +35,7 @@
       become: yes
       when: filebeat_installation_by_tar_file == "enabled"
   
-    - name: Give permissions
+    - name: Give required permissions for the filebeat config file (TAR)
       shell:  chmod 644 /etc/filebeat/filebeat.yml
       when: filebeat_installation_by_tar_file == "enabled"
  

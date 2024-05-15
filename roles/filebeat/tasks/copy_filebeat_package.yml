@@ -14,4 +14,4 @@
   copy:
     src: "{{ filebeat_tar_source_path }}"
     dest: "{{ filebeat_tar_destination_path }}"
-  when: filebeat_installation_by_tar_file == "enabled" 
+  when: filebeat_installation_method == "TAR" 

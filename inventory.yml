@@ -14,15 +14,18 @@ all:
     connect_log_path: /var/log/kafka/connect.log
     zookeeper_log_path: /var/log/kafka/ zookeeper-gc.log
 
-    logstash_ip: 172.31.110.50
+    logstash_ip: 172.31.110.50 
+#172.23.0.1
     logstash_port: 5044
 
     cp_log_monitor_source_path: /ansible_playbook_filebeat/kafka-cp-log-monitor
     cp_log_monitor_destination_path: /root
     
-    airgap_environment: disabled
-    filebeat_installation_by_tar_file: disabled
     #disable or enable the variable as per requirement
+    airgap_environment: enabled
+    
+    #use "TAR" for filebeat installation using tar file and use "OS_SPEC" for installation using OS specific packages   
+    filebeat_installation_method: TAR
 
 zookeeper:
   hosts:

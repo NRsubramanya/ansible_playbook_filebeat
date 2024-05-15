@@ -1,9 +1,37 @@
 ---
-- name: Install Filebeat Service
-  include_tasks: install_filebeat.yml
+- name: Copy Filebeat Installation Package
+  include_tasks: copy_filebeat_package.yml
+  when: airgap_environment == "enabled"
+
+- name: Install Filebeat Service using TAR file
+  include_tasks: install_filebeat_TAR.yml
+  when: 
+    - filebeat_installation_method == "TAR"
+    - airgap_environment == "enabled"
+  tags:
+   - filebeat
+   - filebeat_install
+   - filebeat_install_tar
+
+- name: Install Filebeat Service for REDHAT
+  include_tasks: install_filebeat_RPM.yml
+  when: 
+    - ansible_facts['distribution'] == 'RedHat'
+    - filebeat_installation_method == "OS_SPEC"
   tags:
     - filebeat
     - filebeat_install
+    - filebeat_install_rpm
+
+- name: Install Filebeat Service for UBUNTU/DEBIAN
+  include_tasks: install_filebeat_DEB.yml
+  when: 
+    - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+    - filebeat_installation_method == "OS_SPEC"
+  tags:
+    - filebeat
+    - install_filebeat
+    - filebeat_install_deb
 
 - name: Enable Filebeat Service
   shell: systemctl enable filebeat

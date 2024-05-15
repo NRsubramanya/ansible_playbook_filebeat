@@ -1,0 +1,23 @@
+- name: Install Filebeat Service (Redhat)
+  shell: rpm -vi "{{ filebeat_rpm_destination_path }}"
+  when: airgap_environment == "enabled"
+
+
+- name: Install Filebeat Service (RedHat)
+  block:
+    - name: Import Elasticsearch GPG key
+      shell:  rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+      when: airgap_environment == "disabled"
+
+    - name: Copy elastic.repo file 
+      template:
+        src: /ansible_playbook_filebeat/roles/filebeat/templates/elastic.repo.j2
+        dest: /etc/yum.repos.d/elastic.repo
+        owner: root
+        group: root
+        mode: '0644'
+      when: airgap_environment == "disabled"
+
+    - name: Install Filebeat Package (RedHat)
+      shell: yum install filebeat -y
+      when: airgap_environment == "disabled"
