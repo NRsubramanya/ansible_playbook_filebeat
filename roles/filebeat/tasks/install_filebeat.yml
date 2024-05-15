@@ -8,6 +8,9 @@
       shell: |
         tar -xzvf /tmp/filebeat.tar.gz -C /etc
         mv /etc/filebeat-8.13.4-linux-x86_64 /etc/filebeat
+        cp -r /etc/filebeat /usr/share
+        mkdir /usr/share/filebeat/bin
+        cp -r /usr/share/filebeat/filebeat /usr/share/filebeat/bin
       when: filebeat_installation_by_tar_file == "enabled" 
     
     - name: Create systemd process for filebeat
@@ -26,10 +29,11 @@
     - name: Add /etc/filebeat to PATH in .bashrc
       lineinfile:
         path: ~/.bashrc
-        line: 'export PATH="/etc/filebeat:$PATH"'
+        line: 'export PATH="/usr/share/filebeat/bin/filebeat:$PATH"'
         insertafter: EOF
         state: present
       become: yes
+      when: filebeat_installation_by_tar_file == "enabled"
   
     - name: Give permissions
       shell:  chmod 644 /etc/filebeat/filebeat.yml

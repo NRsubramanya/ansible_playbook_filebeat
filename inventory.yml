@@ -20,8 +20,8 @@ all:
     cp_log_monitor_source_path: /ansible_playbook_filebeat/kafka-cp-log-monitor
     cp_log_monitor_destination_path: /root
     
-    airgap_environment: enabled
-    filebeat_installation_by_tar_file: enabled
+    airgap_environment: disabled
+    filebeat_installation_by_tar_file: disabled
     #disable or enable the variable as per requirement
 
 zookeeper:

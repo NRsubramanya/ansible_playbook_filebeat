@@ -12,9 +12,8 @@
     - enable_filebeat
 
 - name: Enable Kafka module for Filebeat
-  command: ./filebeat modules enable kafka
+  command: filebeat modules enable kafka
   args:
-    chdir: /etc/filebeat
     creates: /etc/filebeat/modules.d/kafka.yml
   tags:
     - filebeat
