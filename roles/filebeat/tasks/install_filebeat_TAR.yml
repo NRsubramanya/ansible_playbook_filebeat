@@ -3,10 +3,15 @@
     - name: Extract tar file (TAR)
       shell: |
         tar -xzvf /tmp/filebeat.tar.gz -C /etc
+
+    - name: Copy Filebeat Binary to the required paths (TAR)
+      shell: |
+        tar -xzvf /tmp/filebeat.tar.gz -C /etc
         mv /etc/filebeat-8.13.4-linux-x86_64 /etc/filebeat
         cp -r /etc/filebeat /usr/share
         mkdir /usr/share/filebeat/bin
         cp -r /usr/share/filebeat/filebeat /usr/share/filebeat/bin
+        cp -r /usr/share/filebeat/filebeat /usr/bin
     
     - name: Create systemd process for filebeat (TAR)
       template:
@@ -19,7 +24,7 @@
     - name: Reload Daemon (TAR)
       shell: systemctl daemon-reload
 
-    - name: Add filebeat binary to PATH in .bashrc
+    - name: Export filebeat binary to PATH in .bashrc
       lineinfile:
         path: ~/.bashrc
         line: 'export PATH="/usr/share/filebeat/bin/filebeat:$PATH"'

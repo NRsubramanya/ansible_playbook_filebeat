@@ -2,13 +2,17 @@
   copy:
     src: "{{ filebeat_rpm_source_path }}"
     dest: "{{ filebeat_rpm_destination_path }}"
-  when: ansible_facts['distribution'] == 'RedHat'
+  when: 
+    - ansible_facts['distribution'] == 'RedHat'
+    - filebeat_installation_method == "OS_SPEC"
 
 - name: Copy filebeat binary file (DEB)
   copy:
     src: "{{ filebeat_deb_source_path }}"
     dest: "{{ filebeat_deb_destination_path }}"
-  when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+  when: 
+    - ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
+    - filebeat_installation_method == "OS_SPEC"
 
 - name: Copy filebeat binary file (TAR)
   copy:
