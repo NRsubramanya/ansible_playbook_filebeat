@@ -8,13 +8,15 @@ all:
     filebeat_deb_destination_path: "/tmp/filebeat.deb"
     filebeat_tar_source_path: "/ansible_playbook_filebeat/roles/filebeat/files/filebeat.tar.gz"
     filebeat_tar_destination_path: "/tmp/filebeat.tar.gz"
+    libselinux_python_rpm_source_path: "/ansible_playbook_filebeat/roles/common/files/libselinux-python.rpm"
+    libselinux_python_rpm_destination_path: "/tmp/libselinux-python.rpm"
     
     #log path
     kafka_broker_log_path: /var/log/kafka/server.log
     connect_log_path: /var/log/kafka/connect.log
     zookeeper_log_path: /var/log/kafka/ zookeeper-gc.log
 
-    logstash_ip: 172.31.110.50 
+    logstash_ip: 172.31.108.124 
 #172.23.0.1
     logstash_port: 5044
 
@@ -27,13 +29,6 @@ all:
     #use "TAR" for filebeat installation using tar file and use "OS_SPEC" for installation using OS specific packages   
     filebeat_installation_method: TAR
 
-zookeeper:
-  hosts:
-    zookeeper1:
-
-kafka_broker:
-  hosts:
-    kafka1:
 
 server:
   hosts:

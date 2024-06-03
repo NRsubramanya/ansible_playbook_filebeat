@@ -73,3 +73,30 @@
   tags:
     - pre_requisite
     - docker_compose_version
+
+- name: Install libselinux-python
+  block:
+  
+    - name: Check libselinux-python package Installation
+      shell: rpm -q libselinux-python
+      register: libselinux_python_version
+      ignore_errors: yes
+      when:
+        - ansible_facts['distribution'] == 'RedHat'
+
+    - name: Copy libselinux-python package
+      copy:
+        src: "{{ libselinux_python_rpm_source_path }}"
+        dest: "{{ libselinux_python_rpm_destination_path }}"
+      when: 
+        - ansible_facts['distribution'] == 'RedHat'
+        - libselinux_python_version.rc != 0
+
+    - name: Install libselinux-python package
+      shell: rpm -i "{{ libselinux_python_rpm_destination_path }}"
+      when: 
+        - ansible_facts['distribution'] == 'RedHat'
+        - libselinux_python_version.rc != 0
+
+
+
