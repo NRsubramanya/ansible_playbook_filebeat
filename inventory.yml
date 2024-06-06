@@ -24,15 +24,26 @@ all:
     cp_log_monitor_destination_path: /root
     
     #disable or enable the variable as per requirement
-    airgap_environment: enabled
+    airgap_environment: disabled
     
     #use "TAR" for filebeat installation using tar file and use "OS_SPEC" for installation using OS specific packages   
-    filebeat_installation_method: TAR
+    filebeat_installation_method: OS_SPEC
 
-
-server:
+zookeeper:
   hosts:
-    server1:
+    zookeeper1:
+    #zookeeper2:
+    #zookeeper3:
+
+kafka_broker:
+  hosts:
+    kafka1:
+    #kafka2:
+    #kafka3:
+
+kibana_server:
+  hosts:
+    kibana_server:
       ansible_host: "{{ logstash_ip }}"
 
 #kafka_connect:

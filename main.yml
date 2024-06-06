@@ -1,6 +1,6 @@
 ---
 - name: Setup Logstash and Kibana on the Kibana Server VM
-  hosts: server
+  hosts: kibana_server
   become: yes
   any_errors_fatal: true
 
@@ -8,7 +8,7 @@
     - logstash
 
 - name: Setup Filebeat Service
-  hosts: server
+  hosts: zookeeper:kafka_broker
   become: yes
   any_errors_fatal: true
 
